@@ -28,12 +28,12 @@ services:
       - DB_HOST=w3schools-db
       - DB_PORT=3306
 
-  web-app:
-    build: ./web-app
-    restart: always
-    depends_on:
-      - rest-api
-    ports:
-      - 8080:3001
-    environment:
-      - API_URL=http://rest-api:3000
+  # web-app:
+  #   build: ./web-app
+  #   restart: always
+  #   depends_on:
+  #     - rest-api
+  #   ports:
+  #     - 8080:3001
+  #   environment:
+  #     - API_URL=http://rest-api:3000
