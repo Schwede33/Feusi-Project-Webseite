@@ -59,6 +59,7 @@ USER nextjs
 EXPOSE 3001
 
 ENV PORT=3001
+ENV API_URL=http://rest-api:3000
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/config/next-config-js/output

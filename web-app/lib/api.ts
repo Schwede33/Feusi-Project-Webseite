@@ -1,13 +1,15 @@
 // lib/api.ts
 export async function fetchFromApi<T>(endpoint: string): Promise<T> {
-    const res = await fetch(`http://localhost:3000${endpoint}`);
+    const apiBase = process.env.API_URL || 'http://localhost:3000';
+    const res = await fetch(`${apiBase}${endpoint}`);
     if (!res.ok) {
-        throw new Error(`API error: ${res.status}`);
+      throw new Error(`API error: ${res.status}`);
     }
     return res.json();
-}
-
-// Example specific function for products
-export async function getProducts() {
+  }
+  
+  // Example specific function for products
+  export async function getProducts() {
     return fetchFromApi<{ ProductID: number; ProductName: string; Price: number }[]>('/products');
-}
+  }
+  
