@@ -27,4 +27,3 @@ services:
     environment:
       - DB_HOST=w3schools-db
       - DB_PORT=3306
-
