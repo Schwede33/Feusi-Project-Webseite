@@ -4,7 +4,7 @@ import { getProducts, getCategories } from '@/lib/api';
 export const dynamic = 'force-dynamic';
 
 export default async function Page() {
-  let products = [] as { ProductID: number; ProductName: string; Price: number }[];
+  let products = [] as { ProductID: number; ProductName: string; Price: number, CategoryID: number }[];
   try {
     products = await getProducts();
   } catch (err) {
@@ -19,15 +19,22 @@ export default async function Page() {
     console.error('Failed to fetch categories:', err);
   }
 
+  //list products per category with category name as header
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {products.map((product) => (
-        <div key={product.ProductID} className="border rounded-lg p-4 shadow-md">
-          <h2 className="text-lg font-semibold">{product.ProductName}</h2>
-          <p className="text-gray-500">Price: CHF{product.Price.toFixed(2)}</p>
-          <p className="text-gray-700 mt-2">
-            Category: {categories.find(cat => cat.CategoryID === product.ProductID)?.CategoryName || 'Unknown'}
-          </p>
+    <div>
+      {categories.map((category) => (
+        <div key={category.CategoryID} className="mb-8">
+          <h2 className="text-2xl font-bold mb-4">{category.CategoryName}</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {products
+              .filter((product) => product.CategoryID === category.CategoryID)
+              .map((product) => (
+                <div key={product.ProductID} className="border rounded-lg p-4 shadow-md">
+                  <h3 className="text-lg font-semibold">{product.ProductName}</h3>
+                  <p className="text-gray-500">Price: CHF{product.Price.toFixed(2)}</p>
+                </div>
+              ))}
+          </div>
         </div>
       ))}
     </div>

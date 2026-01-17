@@ -10,7 +10,7 @@ export async function fetchFromApi<T>(endpoint: string): Promise<T> {
   
   // Example specific function for products
   export async function getProducts() {
-    return fetchFromApi<{ ProductID: number; ProductName: string; Price: number }[]>('/products');
+    return fetchFromApi<{ ProductID: number; ProductName: string; Price: number, CategoryID: number }[]>('/products');
   }
   
   // Example specific function for categories
