@@ -13,3 +13,8 @@ export async function fetchFromApi<T>(endpoint: string): Promise<T> {
     return fetchFromApi<{ ProductID: number; ProductName: string; Price: number }[]>('/products');
   }
   
+  // Example specific function for categories
+  export async function getCategories() {
+    return fetchFromApi<{ CategoryID: number; CategoryName: string; Description: string }[]>('/categories');
+  }
+  

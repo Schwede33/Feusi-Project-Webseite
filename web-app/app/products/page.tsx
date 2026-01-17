@@ -16,7 +16,7 @@ export default async function Page() {
       {products.map((product) => (
         <div key={product.ProductID} className="border rounded-lg p-4 shadow-md">
           <h2 className="text-lg font-semibold">{product.ProductName}</h2>
-          <p className="text-gray-500">Price: ${product.Price.toFixed(2)}</p>
+          <p className="text-gray-500">Price: CHF{product.Price.toFixed(2)}</p>
         </div>
       ))}
     </div>
