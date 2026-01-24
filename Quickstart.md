@@ -190,9 +190,11 @@ Ensure that the REST API is running in Docker while you are developing the Next.
 
 To start the REST API and the database in Docker and start the Next.js app locally, run the following commands:
 ```
+git clone https://github.com/yveseinfeldt/w3schools-database
 cd ~/w3schools-database
 docker-compose up -d
 cd web-app
+npm install
 npm run dev
 ```
 
