@@ -177,6 +177,36 @@ export default async function Page() {
 
 Now, when you navigate to `http://localhost:3001/products`, you should see a list of products fetched from the REST API.
 
+# Next steps
+You can alternatively remove the complete `w3schools-database` folder and clone it again from `https://github.com/yveseinfeldt/w3schools-database` to get the latest version with the `web-app` folder included.
+
+## Implement features
+Start implementing the features required for your web application. Use the Next.js documentation and REST API to fetch and display data as needed. Consider adding routing, styling, and interactivity to enhance the user experience.
+
+Remove (or mark with # for commenting it out) the `web-app` service from the `docker-compose.yml` file while developing locally to speed up your workflow. 
+You can run the Next.js app directly using `npm run dev` in the `web-app` folder. So you don't need to rebuild the Docker image after every change.
+
+Ensure that the REST API is running in Docker while you are developing the Next.js app locally, so that the Next.js app can fetch data from it.
+
+To start the REST API and the database in Docker and start the Next.js app locally, run the following commands:
+```
+cd ~/w3schools-database
+docker-compose up -d
+cd web-app
+npm run dev
+```
+
+## Write the journal and document your work
+Update your project journal with the steps you have taken, any challenges you faced, and how you overcame them. This documentation will be valuable for future reference and for sharing your experience with others.
+Check the `Readme.md` file in the `w3schools-database` folder for guidance on how to document your work effectively.
+
+## More information
+Explore the Next.js documentation for more information on how to create pages, fetch data, and style your application: https://nextjs.org/docs
+
+# Bring all together with Docker 
+
+This is only needed once you have implemented the basic features of your Next.js app and want to bundle everything together using Docker.
+
 ## Setup Docker to bundle all together
 If you need to modify the Docker setup, you can edit the `docker-compose.yml` file in the `w3schools-database` folder. This file defines the services, networks, and volumes for your application.
 Check that the new web-app has also a Dockerfile to build a container for it.
@@ -253,6 +283,22 @@ ENV HOSTNAME="0.0.0.0"
 CMD ["node", "server.js"]
 ```
 
+Also update the next.config.ts file to ensure that the Next.js app can be built and run in a Docker container:
+
+```typescript
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+module.exports = {
+  output: "standalone",
+};
+
+export default nextConfig;
+```
+
 Then, update the `docker-compose.yml` to include the new service:
 
 ```yaml
@@ -318,20 +364,3 @@ Whenever you make changes to the Next.js app, you will need to rebuild the Docke
 docker-compose down
 docker-compose up -d --build
 ```
-
-## Next steps
-You can alternatively remove the complete `w3schools-database` folder and clone it again from `https://github.com/yveseinfeldt/w3schools-database` to get the latest version with the `web-app` folder included.
-
-### Implement features
-Start implementing the features required for your web application. Use the Next.js documentation and REST API to fetch and display data as needed. Consider adding routing, styling, and interactivity to enhance the user experience.
-
-Remove the `web-app` service from the `docker-compose.yml` file while developing locally to speed up your workflow. You can run the Next.js app directly using `npm run dev` in the `web-app` folder. So you don't need to rebuild the Docker image after every change.
-
-Ensure that the REST API is running in Docker while you are developing the Next.js app locally, so that the Next.js app can fetch data from it.
-
-### Write the journal and document your work
-Update your project journal with the steps you have taken, any challenges you faced, and how you overcame them. This documentation will be valuable for future reference and for sharing your experience with others.
-Check the `Readme.md` file in the `w3schools-database` folder for guidance on how to document your work effectively.
-
-### More information
-Explore the Next.js documentation for more information on how to create pages, fetch data, and style your application: https://nextjs.org/docs
