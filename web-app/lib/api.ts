@@ -80,6 +80,42 @@ export async function createCategory(
 ): Promise<Category> {
   return postToApi('/categories', category);
 }
+export async function updateCategory(
+  categoryId: number,
+  data: Pick<Category, 'CategoryName' | 'Description'>
+): Promise<Category> {
+  const res = await fetch(
+    `${API_BASE}/categories/${categoryId}`,
+    {
+      method: 'PATCH', // oder PUT – je nach REST-API
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error('UPDATE CATEGORY ERROR', text);
+    throw new Error('Failed to update category');
+  }
+
+  return res.json();
+}
+
+export async function deleteCategory(categoryId: number): Promise<void> {
+  const res = await fetch(
+    `${API_BASE}/categories/${categoryId}`,
+    {
+      method: 'DELETE',
+    }
+  );
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error('DELETE CATEGORY ERROR', text);
+    throw new Error('Failed to delete category');
+  }
+}
 
 /* =========================
    CUSTOMERS
