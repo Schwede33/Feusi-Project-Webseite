@@ -1,42 +1,27 @@
-import { getProducts, getCategories } from '@/lib/api';
+import { getProducts } from '@/lib/api';
+import ProductGrid from './ProductGrid';
 
-// Force this page to be rendered at runtime
 export const dynamic = 'force-dynamic';
 
 export default async function Page() {
-  let products = [] as { ProductID: number; ProductName: string; Price: number, CategoryID: number }[];
-  try {
-    products = await getProducts();
-  } catch (err) {
-    console.error('Failed to fetch products:', err);
-  }
+  const products = (await getProducts()) ?? [];
 
-  let categories = [] as { CategoryID: number; CategoryName: string; }[];
-  try {
-    categories = await getCategories();
-  }
-  catch (err) {
-    console.error('Failed to fetch categories:', err);
-  }
-
-  //list products per category with category name as header
   return (
-    <div>
-      {categories.map((category) => (
-        <div key={category.CategoryID} className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">{category.CategoryName}</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {products
-              .filter((product) => product.CategoryID === category.CategoryID)
-              .map((product) => (
-                <div key={product.ProductID} className="border rounded-lg p-4 shadow-md">
-                  <h3 className="text-lg font-semibold">{product.ProductName}</h3>
-                  <p className="text-gray-500">Price: CHF{product.Price.toFixed(2)}</p>
-                </div>
-              ))}
-          </div>
-        </div>
-      ))}
+    <div className="max-w-7xl mx-auto px-6 py-14 space-y-10">
+      {/* Page Header */}
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+          Produkte
+        </h1>
+        <p className="mt-2 text-lg text-zinc-600 dark:text-zinc-400">
+          Entdecke alle verfügbaren Produkte in unserem Webshop
+        </p>
+      </div>
+
+      {/* Product Grid */}
+      <div className="rounded-2xl bg-zinc-50 dark:bg-zinc-900 p-6 shadow-sm">
+        <ProductGrid products={products} />
+      </div>
     </div>
   );
 }
