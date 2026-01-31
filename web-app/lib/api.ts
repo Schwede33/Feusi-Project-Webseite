@@ -1,84 +1,126 @@
 // lib/api.ts
-import {Product, Category ,Customer, Order} from './types';
+import type { Product, Category, Customer, Order } from './types';
 
+/**
+ * Externe REST API
+ * (NICHT Next.js api/)
+ */
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000';
+
+/* =========================
+   GENERIC HELPERS
+========================= */
 export async function fetchFromApi<T>(endpoint: string): Promise<T> {
-  const apiBase = process.env.API_URL || 'http://localhost:3000';
-  const res = await fetch(`${apiBase}${endpoint}`, 
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  );
+  const res = await fetch(`${API_BASE}${endpoint}`);
+
   if (!res.ok) {
+    const text = await res.text();
+    console.error('GET ERROR:', res.status, text);
     throw new Error(`API error: ${res.status}`);
   }
+
   return res.json();
 }
 
-export async function postToApi<T>(endpoint: string, data: any): Promise<T> {
-  const apiBase = process.env.API_URL || 'http://localhost:3000';
-  const res = await fetch(`${apiBase}${endpoint}`, {
+export async function postToApi<T>(
+  endpoint: string,
+  data: unknown
+): Promise<T> {
+  console.log('POST TO API:', endpoint, data);
+  const res = await fetch(`${API_BASE}${endpoint}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   });
+
   if (!res.ok) {
+    const text = await res.text();
+    console.error('POST ERROR:', res.status, text);
     throw new Error(`API error: ${res.status}`);
   }
+
   return res.json();
 }
 
-// Example specific function for products
-export async function getProducts() {
-  return fetchFromApi<Product[]>('/products');
+/* =========================
+   PRODUCTS
+========================= */
+export async function getProducts(): Promise<Product[]> {
+  return fetchFromApi('/products');
 }
 
-export async function getProductsByCategoryId(categoryId: number) {
-  let products = await fetchFromApi<Product[]>('/products');
-  return products.filter(product => product.CategoryID === categoryId);
+export async function getProductsByCategoryId(
+  categoryId: number
+): Promise<Product[]> {
+  const products = await fetchFromApi<Product[]>('/products');
+  return products.filter(p => p.CategoryID === categoryId);
 }
 
-// Example specific function for categories
-export async function getCategories() {
-  return fetchFromApi<Category[]>('/categories');
+/* =========================
+   CATEGORIES
+========================= */
+export async function getCategories(): Promise<Category[]> {
+  return fetchFromApi('/categories');
 }
 
-export async function getCategoryById(categoryId: number) {
-  let categoryResul = await fetchFromApi<Category[]>(`/categories/${categoryId}`);
-  return categoryResul[0];
+export async function getCategoryById(
+  categoryId: number
+): Promise<Category | undefined> {
+  const result = await fetchFromApi<Category[]>(
+    `/categories/${categoryId}`
+  );
+  return result[0];
 }
 
-export async function createCategory(category: { CategoryName: string; Description: string }) {
-  return postToApi<Category>('/categories', category);
+export async function createCategory(
+  category: Pick<Category, 'CategoryName' | 'Description'>
+): Promise<Category> {
+  return postToApi('/categories', category);
 }
 
-// Example specific function for customers
-export async function getCustomers() {
-  return fetchFromApi<Customer[]>('/customers');
+/* =========================
+   CUSTOMERS
+========================= */
+export async function getCustomers(): Promise<Customer[]> {
+  return fetchFromApi('/customers');
 }
 
-export async function getCustomerById(customerId: number) {
-  let customerResul = await fetchFromApi<Customer[]>(`/customers/${customerId}`);
-  return customerResul[0];
+export async function getCustomerById(
+  customerId: number
+): Promise<Customer | undefined> {
+  const result = await fetchFromApi<Customer[]>(
+    `/customers/${customerId}`
+  );
+  return result[0];
 }
 
-export async function createCustomer(customer: { FirstName: string; LastName: string; Email: string }) {
-  return postToApi<Customer>('/customers', customer);
-}
-// Example specific function for orders
-export async function getOrders() {
-  return fetchFromApi<Order[]>('/orders');
+export async function createCustomer(
+  customer: Pick<Customer, 'CustomerName' | 'ContactName' | 'Address'>
+): Promise<Customer> {
+  return postToApi('/customers', customer);
 }
 
-export async function getOrderById(orderId: number) {
-  let orderResul = await fetchFromApi<Order[]>(`/orders/${orderId}`);
-  return orderResul[0];
+/* =========================
+   ORDERS
+========================= */
+export async function getOrders(): Promise<Order[]> {
+  return fetchFromApi('/orders');
 }
 
-export async function createOrder(order: { CustomerID: number; OrderDate: string; TotalAmount: number }) {
-  return postToApi<Order>('/orders', order);
+export async function getOrderById(
+  orderId: number
+): Promise<Order | undefined> {
+  const result = await fetchFromApi<Order[]>(
+    `/orders/${orderId}`
+  );
+  return result[0];
+}
+
+export async function createOrder(
+  order: Pick<Order, 'CustomerID' | 'EmployeeID' | 'OrderDate' | 'ShipperID'>
+): Promise<Order> {
+  return postToApi('/orders', order);
 }
