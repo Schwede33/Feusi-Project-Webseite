@@ -241,19 +241,18 @@ export default function ProductsClient({
                   </button>
                 </div>
 
-                <button
-                  onClick={() =>
-                    addToCart({
-                      ProductID: product.ProductID,
-                      ProductName: product.ProductName,
-                      CategoryID: product.CategoryID,
-                      Price: product.Price,
-                    })
-                  }
-                  className="mt-4 w-full rounded bg-blue-600 py-2 text-white hover:bg-blue-700"
-                >
-                  🛒 In den Warenkorb
-                </button>
+              <button
+  onClick={() =>
+    addToCart({
+      ProductID: product.ProductID,
+      ProductName: product.ProductName,
+      Price: product.Price,
+    })
+  }
+  className="mt-4 w-full rounded bg-blue-600 py-2 text-white hover:bg-blue-700"
+>
+  🛒 In den Warenkorb
+</button>
               </>
             )}
           </div>
