@@ -6,7 +6,7 @@ import { useCart } from '@/app/context/CartContext';
 type Product = {
   ProductID: number;
   ProductName: string;
-  Price: number;
+  Price: number;        // ✅ DB-Feld
   CategoryID: number;
   UnitsInStock?: number;
 };
@@ -66,7 +66,7 @@ export default function ProductGrid({
 
             {/* PRICE */}
             <p className="mt-2 text-2xl font-bold text-blue-600">
-              CHF {Number(product.Price).toFixed(2)}
+              CHF {product.Price.toFixed(2)}
             </p>
 
             {/* STOCK */}
@@ -82,8 +82,7 @@ export default function ProductGrid({
                 addToCart({
                   ProductID: product.ProductID,
                   ProductName: product.ProductName,
-                  CategoryID: product.CategoryID,
-                  Price: product.Price,
+                  Price: product.Price, // ✅ RICHTIG
                 })
               }
               className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-white hover:bg-blue-700"

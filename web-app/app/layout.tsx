@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Link from 'next/link';
 import { CartProvider } from '@/app/context/CartContext';
+import CartButton from '@/app/components/CartButton';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -49,18 +50,13 @@ export default function RootLayout({
                 <Link href="/customers" className="hover:text-blue-600">
                   Kunden
                 </Link>
-                <Link href="/orders" className="hover:text-blue-600">
-                  Bestellungen
-                </Link>
+  <Link href="/orders" className="hover:text-blue-600">
+    Bestellungen
+  </Link>
 
-                {/* Cart */}
-                <Link
-                  href="/cart"
-                  className="flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition"
-                >
-                  🛒 Warenkorb
-                </Link>
-              </div>
+  {/* Cart */}
+  <CartButton />
+</div>
             </nav>
           </header>
 
@@ -76,4 +72,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 
