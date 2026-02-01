@@ -1,61 +1,132 @@
-# Quickstart Webtechnologien Projekt
+# 🛍️ Bens Webshop – Webtechnologien Projekt
 
+Schulprojekt im Modul **Webtechnologien**  
+Ziel: Umsetzung einer modernen Webanwendung mit **REST API**, **Datenbank** und **Next.js Frontend**.
 
+---
 
+## 🚀 Quickstart – Projekt lokal starten
 
+### Voraussetzungen
+- Linux VM
+- Docker & Docker Compose
+- Git
+- Node.js (über nvm empfohlen)
+- Visual Studio Code
 
+---
 
-## Setup database and REST API
-Open a terminal in the VM and run the following commands:
+## 🗄️ Setup: Datenbank & REST API
+
+### Installation
+
+Terminal in der VM öffnen und ausführen:
 
 ```bash
 git clone https://github.com/Schwede33/Feusi-Project-Webseite
-cd w3schools-database  # Wechselt in den neuen Ordner w3schools-database
-git pull  # update repository
-docker-compose up -d  # (wenn es probleme gibt, system neustarten)
-code .  # Startet Visual Studio Code im aktuellen Ordner
-```
-
-
-
-### Troubleshooting
-If you encounter any issues, ensure that Docker is running and that the containers are up. You can check the status of the containers with:
-```bash
-docker ps
-```
-If the containers are not running, you can start them with:
-```bash
+cd w3schools-database
+git pull
 docker-compose up -d
-```
+code .
+Damit werden automatisch gestartet:
 
-## Web Application with Next.js
-### Install Node.js and npm
-Make sure Node.js and npm are installed in your VM. You can install them using the following commands:
+MySQL Datenbank
 
-```bash
-# Download and install nvm:
+REST API (CRUD Endpunkte)
+
+🔧 Troubleshooting (Docker)
+Container-Status prüfen:
+
+docker ps
+Falls Container nicht laufen:
+
+docker-compose up -d
+💡 Tipp: Bei Problemen hilft oft ein Neustart der VM.
+
+🌐 Web Application (Next.js)
+Node.js & npm installieren (mit nvm)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-# in lieu of restarting the shell
-\. "$HOME/.nvm/nvm.sh"
-# Download and install Node.js:
+. "$HOME/.nvm/nvm.sh"
 nvm install 24
-# Verify the Node.js version:
-node -v # Should print "v24.13.0".
-# Verify npm version:
-npm -v # Should print "11.6.2".
-```
 
-
-### Run the Next.js app
-Navigate to the Next.js app folder and start the development server:
-
-```bash
+node -v   # z.B. v24.13.0
+npm -v    # z.B. 11.6.2
+▶️ Web-App starten
 cd web-app
+npm install
 npm run dev
-```
-
-Open your web browser and navigate to:
-```
+🌍 Anwendung öffnen
 http://localhost:3001
-```
-You should see my WEBSITE
+Die Webanwendung Bens Webshop wird angezeigt.
+
+
+
+
+### 2️⃣ Alles andere normaler Text
+
+---
+
+## 🧱 Fertige Version: Projekt-Funktionen (kopieren!)
+
+```md
+---
+
+## 📦 Projekt-Funktionen
+
+### ✅ Entitäten (GET)
+- Kategorien
+- Produkte
+- Kunden
+- Bestellungen
+
+### ✏️ Erstellen (POST)
+- Kategorien erstellen
+- Produkte erstellen
+
+### 🔄 Bearbeiten (PATCH)
+- Kategorien bearbeiten
+- Produkte bearbeiten
+
+### 🗑️ Löschen (DELETE)
+- Kategorien löschen
+- Produkte löschen
+
+### 🛒 Warenkorb
+- Produkte in den Warenkorb legen
+- Menge erhöhen bei gleichen Produkten
+- Warenkorb-Zähler in Navigation
+- Warenkorb-Seite mit Gesamtpreis
+
+### 🔍 Suche & UX
+- Suche nach Kategorien und Produkten
+- Highlight des Suchbegriffs
+- Automatisches Scrollen zum Treffer
+- Visuelle Hervorhebung
+
+---
+
+🎨 UI & UX
+Einheitliches Layout
+
+Responsive Design (Grid)
+
+Kartenansicht für Kategorien & Produkte
+
+Dynamische Aktualisierung ohne Seiten-Reload
+
+
+--------------------------------------------------------------------------------------------------------------------
+🧠 Technische Erklärung (Kurzfassung)
+Backend: Externe REST API mit MySQL (Docker)
+
+Frontend: Next.js (App Router)
+
+Kommunikation: fetch() gegen REST API
+
+State Management: React Context (Warenkorb)
+
+Styling: Tailwind CSS
+
+Rendering: Server + Client Components
+
+Session: Client-seitig (kein Checkout)
