@@ -1,20 +1,50 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import type { Category } from '@/lib/types';
 import { updateCategory, deleteCategory } from '@/lib/api';
 
 type Props = {
-  initialCategories?: Category[];
+  initialCategories: Category[];
 };
 
-export default function CategoriesClient({ initialCategories = [] }: Props) {
-  const [categories, setCategories] = useState<Category[]>(initialCategories);
+export default function CategoriesClient({
+  initialCategories,
+}: Props) {
+  /* =========================
+     STATE
+  ========================= */
+  const [categories, setCategories] = useState<Category[]>(
+    initialCategories ?? []
+  );
   const [editingId, setEditingId] = useState<number | null>(null);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [loading, setLoading] = useState(false);
 
+  /* =========================
+     HIGHLIGHT + SCROLL
+  ========================= */
+  const searchParams = useSearchParams();
+  const highlight = searchParams
+    .get('highlight')
+    ?.toLowerCase()
+    .trim();
+
+  const highlightedRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (highlightedRef.current) {
+      highlightedRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [highlight]);
+
+  /* =========================
+     EDIT
+  ========================= */
   function startEdit(category: Category) {
     setEditingId(category.CategoryID);
     setName(category.CategoryName);
@@ -29,117 +59,151 @@ export default function CategoriesClient({ initialCategories = [] }: Props) {
 
   async function saveEdit(categoryId: number) {
     try {
-      setLoading(true);
-
-      const updated = await updateCategory(categoryId, {
+      await updateCategory(categoryId, {
         CategoryName: name,
         Description: description,
-      });window.location.reload();
+      });
 
+      // ✅ UI sofort aktualisieren
       setCategories(prev =>
         prev.map(cat =>
-          cat.CategoryID === categoryId ? updated : cat
+          cat.CategoryID === categoryId
+            ? {
+                ...cat,
+                CategoryName: name,
+                Description: description,
+              }
+            : cat
         )
       );
 
       cancelEdit();
     } catch (error) {
       alert('Kategorie konnte nicht gespeichert werden');
-    } finally {
-      setLoading(false);
+      console.error(error);
     }
   }
 
+  /* =========================
+     DELETE
+  ========================= */
   async function handleDelete(categoryId: number) {
-    if (!confirm('Willst du diese Kategorie wirklich löschen?')) return;
+    if (!confirm('Kategorie wirklich löschen?')) return;
 
     try {
       await deleteCategory(categoryId);
       setCategories(prev =>
-        prev.filter(c => c.CategoryID !== categoryId)
+        prev.filter(cat => cat.CategoryID !== categoryId)
       );
-    } catch {
-      alert('Kategorie konnte nicht gelöscht werden (evtl. Produkte vorhanden)');
+    } catch (error) {
+      alert(
+        'Kategorie konnte nicht gelöscht werden (evtl. noch Produkte vorhanden)'
+      );
+      console.error(error);
     }
+  }
+
+  /* =========================
+     RENDER
+  ========================= */
+  if (!categories || categories.length === 0) {
+    return (
+      <p className="text-zinc-500">
+        Keine Kategorien vorhanden.
+      </p>
+    );
   }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {categories.length === 0 && (
-        <p className="text-zinc-500">Keine Kategorien vorhanden.</p>
-      )}
+      {categories.map(category => {
+        const isHighlighted =
+          highlight &&
+          category.CategoryName
+            .toLowerCase()
+            .includes(highlight);
 
-      {categories.map(category => (
-        <div
-          key={String(category.CategoryID ?? `${category.CategoryName}-${Math.random()}`)}
-          className="rounded-2xl bg-white dark:bg-zinc-900 p-6 shadow-md transition hover:shadow-lg"
-        >
-          {editingId === category.CategoryID ? (
-            /* ===== EDIT MODE ===== */
-            <>
-              <input
-                value={name}
-                onChange={e => setName(e.target.value)}
-                className="w-full rounded border p-2 mb-2"
-                placeholder="Kategorie Name"
-              />
+        return (
+          <div
+            key={category.CategoryID}
+            ref={isHighlighted ? highlightedRef : null}
+            className={`rounded-2xl p-6 shadow-md transition
+              ${
+                isHighlighted
+                  ? 'border-2 border-blue-500 bg-blue-50'
+                  : 'bg-white dark:bg-zinc-900'
+              }`}
+          >
+            <div className="mb-3 text-3xl">📦</div>
 
-              <textarea
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-                className="w-full rounded border p-2 mb-4"
-                placeholder="Beschreibung"
-              />
+            {editingId === category.CategoryID ? (
+              <>
+                <input
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  className="w-full mb-2 rounded border p-2"
+                  placeholder="Kategorie Name"
+                />
 
-              <div className="flex gap-2">
-                <button
-                  onClick={() => saveEdit(category.CategoryID)}
-                  disabled={loading}
-                  className="flex-1 rounded bg-blue-600 text-white py-2 hover:bg-blue-700"
-                >
-                  💾 Speichern
-                </button>
+                <textarea
+                  value={description}
+                  onChange={e =>
+                    setDescription(e.target.value)
+                  }
+                  className="w-full mb-4 rounded border p-2"
+                  placeholder="Beschreibung"
+                />
 
-                <button
-                  onClick={cancelEdit}
-                  className="flex-1 rounded bg-gray-200 py-2 hover:bg-gray-300"
-                >
-                  Abbrechen
-                </button>
-              </div>
-            </>
-          ) : (
-            /* ===== VIEW MODE ===== */
-            <>
-              <div className="mb-4 text-3xl">📦</div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() =>
+                      saveEdit(category.CategoryID)
+                    }
+                    className="flex-1 rounded bg-blue-600 py-2 text-white hover:bg-blue-700"
+                  >
+                    💾 Speichern
+                  </button>
 
-              <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
-                {category.CategoryName}
-              </h2>
+                  <button
+                    onClick={cancelEdit}
+                    className="flex-1 rounded bg-gray-200 py-2 hover:bg-gray-300"
+                  >
+                    Abbrechen
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 className="text-lg font-bold">
+                  {category.CategoryName}
+                </h2>
 
-              <p className="mt-2 text-zinc-600 dark:text-zinc-400">
-                {category.Description}
-              </p>
+                <p className="mt-2 text-zinc-600">
+                  {category.Description}
+                </p>
 
-              <div className="mt-4 flex gap-4">
-                <button
-                  onClick={() => startEdit(category)}
-                  className="text-blue-600 font-medium hover:underline"
-                >
-                  ✏️ Bearbeiten
-                </button>
+                <div className="mt-4 flex gap-4">
+                  <button
+                    onClick={() => startEdit(category)}
+                    className="text-blue-600 hover:underline"
+                  >
+                    ✏️ Bearbeiten
+                  </button>
 
-                <button
-                  onClick={() => handleDelete(category.CategoryID)}
-                  className="text-red-600 font-medium hover:underline"
-                >
-                  🗑️ Löschen
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-      ))}
+                  <button
+                    onClick={() =>
+                      handleDelete(category.CategoryID)
+                    }
+                    className="text-red-600 hover:underline"
+                  >
+                    🗑️ Löschen
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

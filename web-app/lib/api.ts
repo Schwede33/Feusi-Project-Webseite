@@ -160,3 +160,43 @@ export async function createOrder(
 ): Promise<Order> {
   return postToApi('/orders', order);
 }
+/* =========================
+   PRODUCTS CRUD
+========================= */
+
+export async function createProduct(
+  product: Pick<Product, 'ProductName' | 'Price' | 'CategoryID'>
+): Promise<Product> {
+  return postToApi('/products', product);
+}
+
+export async function updateProduct(
+  productId: number,
+  data: Pick<Product, 'ProductName' | 'Price' | 'CategoryID'>
+): Promise<Product> {
+  const res = await fetch(
+    `${API_BASE}/products/${productId}`,
+    {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('Failed to update product');
+  }
+
+  return res.json();
+}
+
+export async function deleteProduct(productId: number): Promise<void> {
+  const res = await fetch(
+    `${API_BASE}/products/${productId}`,
+    { method: 'DELETE' }
+  );
+
+  if (!res.ok) {
+    throw new Error('Failed to delete product');
+  }
+}
