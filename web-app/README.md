@@ -62,51 +62,48 @@ Die Webanwendung Bens Webshop wird angezeigt.
 
 
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------
-📦 Projekt-Funktionen (Feature-Übersicht)
-✅ Entitäten (GET)
-Kategorien
+### 2️⃣ Alles andere normaler Text
 
-Produkte
+---
 
-Kunden
+## 🧱 Fertige Version: Projekt-Funktionen (kopieren!)
 
-Bestellungen
+```md
+---
 
-✏️ Erstellen (POST)
-Kategorien erstellen
+## 📦 Projekt-Funktionen
 
-Produkte erstellen
+### ✅ Entitäten (GET)
+- Kategorien
+- Produkte
+- Kunden
+- Bestellungen
 
-🔄 Bearbeiten (PATCH)
-Kategorien bearbeiten
+### ✏️ Erstellen (POST)
+- Kategorien erstellen
+- Produkte erstellen
 
-Produkte bearbeiten
+### 🔄 Bearbeiten (PATCH)
+- Kategorien bearbeiten
+- Produkte bearbeiten
 
-🗑️ Löschen (DELETE)
-Kategorien löschen
+### 🗑️ Löschen (DELETE)
+- Kategorien löschen
+- Produkte löschen
 
-Produkte löschen
+### 🛒 Warenkorb
+- Produkte in den Warenkorb legen
+- Menge erhöhen bei gleichen Produkten
+- Warenkorb-Zähler in Navigation
+- Warenkorb-Seite mit Gesamtpreis
 
-🛒 Warenkorb (Session-basiert)
-Produkte in Warenkorb legen
+### 🔍 Suche & UX
+- Suche nach Kategorien und Produkten
+- Highlight des Suchbegriffs
+- Automatisches Scrollen zum Treffer
+- Visuelle Hervorhebung
 
-Menge erhöhen bei gleichen Produkten
-
-Warenkorb-Zähler in Navigation
-
-Warenkorb-Seite mit Gesamtpreis
-
-Session bleibt während Nutzung erhalten
-
-🔍 Suche (zusätzliche Features)
-Suche nach Kategorien und Produkten
-
-Highlight des Suchbegriffs
-
-Automatisches Scrollen zum Treffer
-
-Visuelle Hervorhebung (Border / Farbe)
+---
 
 🎨 UI & UX
 Einheitliches Layout
