@@ -59,6 +59,10 @@ npm run dev
 http://localhost:3001
 Die Webanwendung Bens Webshop wird angezeigt.
 
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
 📦 Projekt-Funktionen (Feature-Übersicht)
 ✅ Entitäten (GET)
 Kategorien
@@ -113,19 +117,8 @@ Kartenansicht für Kategorien & Produkte
 
 Dynamische Aktualisierung ohne Seiten-Reload
 
-📊 Bewertungskriterien – Erfüllungsstatus
-Kriterium	Status
-Setup React App mit REST API & DB	✅
-3 Entities mit GET anzeigen	✅
-2 Entities mit POST	✅
-2 Entities mit PATCH	✅
-2 Entities mit DELETE	✅
-3 zusätzliche Features	✅ (Warenkorb, Suche, Highlight)
-Technische Erklärung in Markdown	✅
-Alle Features dokumentiert	✅
-Journal dokumentiert	✅
-➡️ Maximalpunktzahl erreicht
 
+--------------------------------------------------------------------------------------------------------------------
 🧠 Technische Erklärung (Kurzfassung)
 Backend: Externe REST API mit MySQL (Docker)
 
