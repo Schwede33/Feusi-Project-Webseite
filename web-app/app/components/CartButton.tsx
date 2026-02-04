@@ -4,7 +4,13 @@ import Link from 'next/link';
 import { useCart } from '@/app/context/CartContext';
 
 export default function CartButton() {
-  const { cartCount } = useCart();
+  const { items } = useCart();
+
+  // Gesamtmenge berechnen
+  const cartCount = items.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
 
   return (
     <Link
@@ -14,7 +20,7 @@ export default function CartButton() {
       🛒 Warenkorb
 
       {cartCount > 0 && (
-        <span className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
+        <span className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-600 text-xs font-bold">
           {cartCount}
         </span>
       )}
