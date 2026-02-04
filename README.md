@@ -44,7 +44,7 @@ Falls Container nicht laufen:
 ```
 docker-compose up -d
 ```
-💡 Tipp: Bei Problemen hilft oft ein Neustart der VM.
+💡 Tipp: Bei Problemen hilft oft ein Neustart.
 
 
 ▶️ Web-App starten
