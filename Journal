@@ -1,0 +1,94 @@
+# 📘 Projektjournal – Webtechnologien
+
+**Name:** Ben Iseli  
+**Projekt:** Webshop mit REST-API und Next.js  
+**Zeitraum:** Januar – Februar 2026  
+
+---
+
+## 10.01.2026 – Projektstart & Setup
+- Projekt aus GitHub geklont
+- Docker-Umgebung für MySQL und REST-API gestartet
+- Verbindung zur W3Schools-Datenbank überprüft
+- Erste API-Endpoints getestet (Categories, Products)
+
+**Probleme:**
+- Anfangs Unsicherheit bei Datenbankfeldern und Endpoints
+
+---
+
+## 17.01.2026 – Frontend Grundstruktur
+- Next.js Projekt eingerichtet
+- Erste Seiten (`categories`, `products`, `customers`) erstellt
+- Daten mit `fetch` aus der REST-API geladen
+- Typen mit TypeScript definiert (`types.ts`)
+
+**Probleme:**
+- TypeScript-Fehler durch falsche Feldnamen
+- Fehler bei `map()` auf nicht initialisierten Daten
+
+---
+
+## 21.01.2026 – Layout & Darstellung
+- Startseite modernisiert
+- Karten-Layout für Kategorien und Produkte umgesetzt
+- Icons und Hover-Effekte hinzugefügt
+- Einheitliches Layout über `layout.tsx`
+
+**Probleme:**
+- Text passte nicht immer in Kacheln → Layout angepasst
+
+---
+
+## 31.01.2026 – CRUD Funktionen
+- Kategorien erstellen, bearbeiten und löschen implementiert
+- Produkte ebenfalls CRUD-fähig gemacht
+- Client-Komponenten für Bearbeitung eingeführt
+- Seiten aktualisieren sich nach Änderungen ohne manuelles Reload
+
+**Probleme:**
+- PATCH / DELETE Requests funktionierten nicht wegen falscher API-URL
+- Fehler durch fehlende Environment-Variablen
+
+---
+
+## 01.02.2026 – Suche & Benutzerfreundlichkeit
+- Suchfunktion für Produkte und Kategorien umgesetzt
+- Suchergebnisse werden visuell hervorgehoben
+- Automatisches Scrollen zum gefundenen Element
+- Suchresultate können angeklickt werden
+
+**Probleme:**
+- Übergabe der Suchparameter musste angepasst werden
+
+---
+
+## 02.02.2026 – Warenkorb Funktion
+- Warenkorb mit React Context umgesetzt
+- Produkte in den Warenkorb legen
+- Einzelne Produkte entfernen
+- Warenkorb komplett leeren
+- Totalpreis wird dynamisch berechnet
+- Warenkorb-Zähler im Header angezeigt
+
+**Probleme:**
+- Fehler mit `toFixed()` wegen falschem Feldnamen
+- Context zuerst nicht korrekt exportiert
+
+---
+
+## 03.02.2026 – Debugging & Stabilisierung
+- API-Fehler (`fetch failed`, `ETIMEDOUT`) analysiert
+- Ursache war falsche Datenbank-Verbindung im Docker-Setup
+- DB_HOST auf Service-Name angepasst
+- Container neu gestartet und System stabilisiert
+
+---
+
+## ✅ Projektstand
+- REST-API mit MySQL
+- Next.js Webshop
+- CRUD für Kategorien und Produkte
+- Suchfunktion
+- Warenkorb mit Totalpreis
+- Modernes Layout und saubere Struktur
