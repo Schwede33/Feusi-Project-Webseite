@@ -24,7 +24,7 @@ Terminal öffnen und folgende Befehle ausführen:
 
 ```bash
 git clone https://github.com/Schwede33/Feusi-Project-Webseite
-cd w3schools-database
+cd Feusi-Project-Webseite
 git pull
 docker-compose up -d
 code .
