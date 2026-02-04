@@ -43,9 +43,7 @@ export function CartProvider({
   const [items, setItems] = useState<CartItem[]>([]);
 
   /* ADD */
-  function addToCart(
-    product: Omit<CartItem, 'quantity'>
-  ) {
+  function addToCart(product: Omit<CartItem, 'quantity'>) {
     setItems(prev => {
       const existing = prev.find(
         i => i.ProductID === product.ProductID
@@ -75,7 +73,6 @@ export function CartProvider({
     setItems([]);
   }
 
-  /* COUNT */
   const cartCount = items.reduce(
     (sum, item) => sum + item.quantity,
     0
@@ -100,11 +97,12 @@ export function CartProvider({
    HOOK
 ========================= */
 export function useCart() {
-  const ctx = useContext(CartContext);
-  if (!ctx) {
+  const context = useContext(CartContext);
+  if (!context) {
     throw new Error(
       'useCart must be used within CartProvider'
     );
   }
-  return ctx;
+  return context;
 }
+
