@@ -48,7 +48,7 @@ export default function CategoriesClient({
   function startEdit(category: Category) {
     setEditingId(category.CategoryID);
     setName(category.CategoryName);
-    setDescription(category.Description);
+    setDescription(category.Description ?? '');
   }
 
   function cancelEdit() {
@@ -64,7 +64,7 @@ export default function CategoriesClient({
         Description: description,
       });
 
-      // ✅ UI sofort aktualisieren
+      // UI sofort aktualisieren
       setCategories(prev =>
         prev.map(cat =>
           cat.CategoryID === categoryId
