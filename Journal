@@ -84,7 +84,20 @@
 - Container neu gestartet und System stabilisiert
 
 ---
+### 04.02.2026 – Warenkorb Mengensteuerung
 
+Heute wurde der Warenkorb erweitert, sodass Produkte mehrfach hinzugefügt
+und die Menge über Plus- und Minus-Buttons angepasst werden kann.
+Zusätzlich wird der Gesamtpreis dynamisch berechnet.
+
+Dabei trat ein Fehler auf, da zwei Routen (`/Cart` und `/cart`) existierten.
+Next.js ist case-sensitiv, weshalb die falsche Seite gerendert wurde.
+Nach dem Entfernen des doppelten Ordners funktionierte die Anzeige korrekt.
+
+Ergebnis: Mengensteuerung, Entfernen einzelner Produkte, Leeren des
+Warenkorbs und Gesamtpreis funktionieren vollständig.
+
+---
 ## ✅ Projektstand
 - REST-API mit MySQL
 - Next.js Webshop
