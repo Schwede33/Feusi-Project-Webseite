@@ -152,7 +152,7 @@ Rendering: Server & Client Components
 Session: Client-seitig (kein Checkout-Prozess)
 *****************************************************************************************************************************************************
 
-### 📝 Journal
+## 📝 Journal
 
 Ein Projektjournal wurde geführt und dokumentiert:
 
